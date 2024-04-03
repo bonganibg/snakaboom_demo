@@ -11,6 +11,7 @@ namespace SnakeKaboomDemo.Enums
         Left,
         Right,
         Up,
-        Down
+        Down,
+        Neutral
     }
 }

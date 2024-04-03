@@ -13,15 +13,14 @@ namespace SnakeKaboomDemo.Services
     public class SnakeBody : Movement
     {        
         public Direction CurrentDirection { get; set; }
-        private List<(int x, int y)> snake;           
+        private List<(int x, int y)> snake = new List<(int x, int y)>();   
         private readonly IMapBuilder _map;
 
         public SnakeBody(int x, int y, IMapBuilder map)
         {
-            snake = new List<(int x, int y)>();
-            snake.Add((x, y));
-            
+            CurrentDirection = Direction.Right;
             _map = map;
+            snake.Add((x, y));
         }
 
         public void GrowBody()
@@ -30,17 +29,29 @@ namespace SnakeKaboomDemo.Services
             snake.Add(lastPosition);
         }
 
-        public void UpdateSnakeOnMap()
+        public void UpdateSnakePosition()
         {
-            var nextPosition = Move(CurrentDirection, snake.First());
+            var nextPosition = Move(CurrentDirection, snake[0]);
             
             if (!_map.IsWithinBounds(CurrentDirection, nextPosition))
                 nextPosition = _map.GetWrappedPosition(CurrentDirection, nextPosition);
 
-            snake.Add(nextPosition);
+            AddToHead(nextPosition);
+        }
+
+        private void AddToHead((int x, int y) position)
+        {
+            snake.Reverse();
+            snake.Add(position);
+
+            snake.Reverse();
             snake.RemoveAt(snake.Count - 1);
         }
 
+        public List<(int x, int y)> GetSnakePosition()
+        {
+            return snake;
+        }
                 
     }
 }

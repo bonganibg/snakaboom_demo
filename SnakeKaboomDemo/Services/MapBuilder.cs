@@ -19,9 +19,7 @@ namespace SnakeKaboomDemo.Services
         public MapBuilder(int height, int width)
         {
             Height = height;
-            Width = width;
-
-            CreateScreenBoundaries();
+            Width = width;            
         }
 
         /// <summary>
@@ -59,7 +57,7 @@ namespace SnakeKaboomDemo.Services
         /// </summary>
         /// <param name="position"> Where the item should be placed </param>
         /// <param name="value"> The characters to be included </param>
-        private void DrawMapObject((int x, int y) position, char value)
+        public void DrawMapObject((int x, int y) position, char value)
         {
             Console.SetCursorPosition(position.x, position.y);
             Console.Write(value);
@@ -75,9 +73,9 @@ namespace SnakeKaboomDemo.Services
         public bool IsWithinBounds(Direction direction, (int x, int y) currentPosition)
         {
             if (direction == Direction.Left || direction == Direction.Right)
-                return currentPosition.x >= Width || currentPosition.x <= 0 ? false : true;
+                return currentPosition.x >= Width - 1 || currentPosition.x <= 1 ? false: true;
 
-            return currentPosition.y >= Height || currentPosition.y <= 0 ? true : false;
+            return currentPosition.y >= Height - 1 || currentPosition.y <= 1 ? false : true;
         }
 
         /// <summary>
@@ -92,11 +90,11 @@ namespace SnakeKaboomDemo.Services
             switch(direction)
             {
                 case Direction.Left:
-                    return (Width - 2, currentPosition.y);
+                    return (Width - 1, currentPosition.y);
                 case Direction.Right:
                     return (1, currentPosition.y);
                 case Direction.Up:
-                    return (currentPosition.x, Height - 2);
+                    return (currentPosition.x, Height - 1);
                 case Direction.Down:
                     return (currentPosition.x, 1);                                    
             }
