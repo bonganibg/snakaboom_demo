@@ -15,6 +15,7 @@ namespace SnakeKaboomDemo.Services
         public Direction CurrentDirection { get; set; }
         private List<(int x, int y)> snake = new List<(int x, int y)>();   
         private readonly IMapBuilder _map;
+        public (int x, int y) PreviousTail { get; set; }
 
         public SnakeBody(int x, int y, IMapBuilder map)
         {
@@ -36,6 +37,7 @@ namespace SnakeKaboomDemo.Services
             if (!_map.IsWithinBounds(CurrentDirection, nextPosition))
                 nextPosition = _map.GetWrappedPosition(CurrentDirection, nextPosition);
 
+            PreviousTail = snake[snake.Count - 1];
             AddToHead(nextPosition);
         }
 

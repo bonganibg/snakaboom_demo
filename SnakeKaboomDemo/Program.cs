@@ -53,4 +53,7 @@ void DrawSnakeOnMap()
 	{
 		mapBuilder.DrawMapObject(position, 'o');
 	}
+
+	// Remove tail from map 
+	mapBuilder.DrawMapObject(snake.PreviousTail, ' ');
 }

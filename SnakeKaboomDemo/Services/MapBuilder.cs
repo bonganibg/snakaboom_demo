@@ -27,6 +27,8 @@ namespace SnakeKaboomDemo.Services
         /// </summary>
         public void CreateScreenBoundaries()
         {
+            Console.CursorVisible = false;
+            Console.SetWindowPosition(0, 0);
             Console.WindowHeight = Height;
             Console.WindowWidth = Width;
             Console.SetBufferSize(Width, Height);
