@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace SnakeKaboomDemo.Services
 {
-    public class MapBuilder
+    public class MapBuilder : IMapBuilder
     {
         public int Height { get; internal set; }
-        public int Width { get; internal set; }        
+        public int Width { get; internal set; }
 
         public MapBuilder(int height, int width)
         {
@@ -53,7 +53,7 @@ namespace SnakeKaboomDemo.Services
                 DrawMapObject((0, i), '+');
             }
         }
-        
+
         /// <summary>
         /// Adds a map object at a specified position
         /// </summary>
@@ -74,13 +74,34 @@ namespace SnakeKaboomDemo.Services
         /// <returns></returns>
         public bool IsWithinBounds(Direction direction, (int x, int y) currentPosition)
         {
-            if (direction == Direction.Left || direction== Direction.Right)
+            if (direction == Direction.Left || direction == Direction.Right)
                 return currentPosition.x >= Width || currentPosition.x <= 0 ? false : true;
 
             return currentPosition.y >= Height || currentPosition.y <= 0 ? true : false;
-        }        
+        }
 
+        /// <summary>
+        /// Get the new position of the snakes head if it goes beyond the boundaries
+        /// </summary>
+        /// <param name="direction"> The direction that the head is going in </param>
+        /// <param name="currentPosition"> The current position of the head </param>
+        /// <returns> The wrapped position of the snakes head </returns>
+        /// <exception cref="Exception"></exception>
+        public (int x, int y) GetWrappedPosition(Direction direction, (int x, int y) currentPosition)
+        {
+            switch(direction)
+            {
+                case Direction.Left:
+                    return (Width - 2, currentPosition.y);
+                case Direction.Right:
+                    return (1, currentPosition.y);
+                case Direction.Up:
+                    return (currentPosition.x, Height - 2);
+                case Direction.Down:
+                    return (currentPosition.x, 1);                                    
+            }
 
-
+            throw new Exception("Direction not found");
+        }
     }
 }
