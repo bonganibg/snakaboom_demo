@@ -3,11 +3,38 @@ using SnakeKaboomDemo.Services;
 
 MapBuilder mapBuilder = new MapBuilder(50, 120);
 SnakeBody snake = new SnakeBody(1, 1, mapBuilder);
+FoodGenerator foodGen = new FoodGenerator((120, 50));
+
 
 mapBuilder.CreateScreenBoundaries();
 mapBuilder.BuildMap();
 
-Run();
+Thread gameThread = new Thread(Run);
+Thread foodThread = new Thread(FoodGenerator);
+
+gameThread.Start();
+foodThread.Start();
+
+
+void FoodGenerator()
+{
+	while (true)
+	{
+        foodGen.SpawnFood();
+        PrintFoodPositions();
+		Thread.Sleep(5000);
+    }
+}
+
+void PrintFoodPositions()
+{
+	var currentFood = foodGen.GetFoodPositions();
+	foreach (var key in currentFood.Keys)
+	{
+		mapBuilder.DrawMapObject(key, currentFood[key].Icon);
+
+	}
+}
 
 void Run()
 {

@@ -53,13 +53,13 @@ namespace TestSnakaboom.Services
             switch (direction)
             {
                 case Direction.Left:
-                    expected = (boundaries.x - 1, position.y);
+                    expected = (boundaries.x - 2, position.y);
                     break;
                 case Direction.Right:
                     expected = (1, position.y);
                     break;
                 case Direction.Up:
-                    expected = (position.x, boundaries.y - 1);
+                    expected = (position.x, boundaries.y - 2);
                     break;
                 case Direction.Down:
                     expected = (position.x, 1);

@@ -92,11 +92,11 @@ namespace SnakeKaboomDemo.Services
             switch(direction)
             {
                 case Direction.Left:
-                    return (Width - 1, currentPosition.y);
+                    return (Width - 2, currentPosition.y);
                 case Direction.Right:
                     return (1, currentPosition.y);
                 case Direction.Up:
-                    return (currentPosition.x, Height - 1);
+                    return (currentPosition.x, Height - 2);
                 case Direction.Down:
                     return (currentPosition.x, 1);                                    
             }
