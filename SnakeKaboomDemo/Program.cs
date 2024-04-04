@@ -51,10 +51,27 @@ void Run()
 		}
 
         snake.UpdateSnakePosition();
+		var currentPosition = snake.GetSnakePosition();
+		
+		if (EatListener(currentPosition[0]))
+			snake.GrowBody();
+
         DrawSnakeOnMap();
 
         Thread.Sleep(100);
 	}
+}
+
+bool EatListener((int x, int y) snakePosition)
+{
+	if (foodGen.GetFoodPositions().ContainsKey(snakePosition))
+	{
+        foodGen.RemoveFoodFromList(snakePosition);
+		return true;
+    }
+
+	return false;
+
 }
 
 Direction GetKeyDirection(ConsoleKeyInfo keyPressed)

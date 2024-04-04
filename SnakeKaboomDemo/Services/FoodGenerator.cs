@@ -53,5 +53,10 @@ namespace SnakeKaboomDemo.Services
         {
             return foodStore;
         }
+
+        public void RemoveFoodFromList((int x, int y) position)
+        {
+            foodStore.Remove(position);
+        }
     }
 }
